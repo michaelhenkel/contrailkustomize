@@ -55,7 +55,7 @@ spec:
             - "/bin/sh"
             - "-c"
             - "tail -f /dev/null"
-            image: contrail-external-dnsmasq:latest
+            image: contrail-controller-config-dnsmasq:latest
           - name: init
             image: python:alpine
           - name: init2

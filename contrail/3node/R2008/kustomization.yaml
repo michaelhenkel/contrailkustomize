@@ -23,9 +23,9 @@ images:
 - name: contrail-controller-config-devicemgr
   newTag: R2008
   newName: tungstenfabric/contrail-controller-config-devicemgr
-- name: contrail-external-dnsmasq
+- name: contrail-controller-config-dnsmasq
   newTag: R2008
-  newName: tungstenfabric/contrail-external-dnsmasq
+  newName: tungstenfabric/contrail-controller-config-dnsmasq
 - name: redis
   newTag: "4.0.2"
   newName: redis
