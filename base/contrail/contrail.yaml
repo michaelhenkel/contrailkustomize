@@ -110,7 +110,7 @@ spec:
           - name: init
             image: python:alpine
           - name: kubemanager
-            image: latestcontrail-kubernetes-kube-manager:latest
+            image: contrail-kubernetes-kube-manager:latest
           - name: statusmonitor
             image: contrail-statusmonitor:latest
           ipFabricForwarding: false
