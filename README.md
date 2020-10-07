@@ -24,3 +24,10 @@ kubectl apply -k \
   github.com/michaelhenkel/contrailkustomize/contrail/${REPLICA}node/${RELEASE}
 ```
 ## Cleanup
+```
+kubectl delete -k github.com/michaelhenkel/contrailkustomize/contrail/${REPLICA}node/${RELEASE}
+kubectl delete -k github.com/michaelhenkel/contrailkustomize/operator/R2008
+kubectl delete crds --all
+kubectl delete pv --all
+```
+also, remove /mnt/zookeeper and /mnt/cassandra from the master nodes    
