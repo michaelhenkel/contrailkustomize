@@ -1,69 +1,26 @@
-# Prerequisites
+# Testing environment
 
-Tested on a k8s installation deployed with Kubespray using the following inventory    
-```
-cat kubespray/inventory/mycluster/inventory.yaml 
-all:
-  hosts:
-    server1.local:
-      ansible_host: 172.26.208.101
-      ansible_become: yes
-    server2.local:
-      ansible_host: 172.26.208.102
-      ansible_become: yes
-    server3.local:
-      ansible_host: 172.26.208.103
-      ansible_become: yes
-    server4.local:
-      ansible_host: 172.26.208.104
-      ansible_become: yes
-  vars:
-    kube_version: v1.18.0
-    kubectl_localhost: true
-    kubeconfig_localhost: true
-kube-master:
-  hosts:
-    server1.local:
-    server2.local:
-    server3.local:
-kube-node:
-  hosts:
-    server4.local:
-  vars:
-    node_labels:
-      node-role.opencontrail.org: vrouter
-etcd:
-  hosts:
-    server1.local:
-    server2.local:
-    server3.local:
-k8s-cluster:
-  children:
-    kube-master:
-    kube-node:
-```
-using the following deploy command    
-```
-ansible-playbook -i inventory/mycluster/inventory.yaml cluster.yml -e "kube_network_plugin=cni" -e "kube_network_plugin_multus=false" -b -v
-```
+Tested on a system setup using this [vagrantfile](misc/vagrant/Vagrantfile).    
+Kubernetes installed using kubespray with [inventory](misc/kubespray/inventory.yaml) and    
+this [deploy command](misc/kubespray/runKubespray.sh)
+
 # Instructions
 
-## Set release
+## Set Contrail release version
 ```
 RELEASE=R2008
 ```
-## Create Operator
-### Create roles, bindings, operator and crds
+## Create Operator, roles, bindings and crds
 ```
 kubectl apply -k \
   github.com/michaelhenkel/contrailkustomize/operator/${RELEASE}
 ```
-### Wait for the CRDs to be created
+## Wait for the CRDs to be created
 ```
 kubectl wait crds --for=condition=Established --timeout=2m managers.contrail.juniper.net
 ```
 ## Create Contrail
-### set scale to 1 or 3 node
+### Set scale to 1 or 3 node(s)
 ```
 REPLICA=1
 ```
@@ -76,7 +33,7 @@ REPLICA=3
 kubectl apply -k \
   github.com/michaelhenkel/contrailkustomize/contrail/${REPLICA}node/${RELEASE}
 ```
-## get password
+## get password for UI
 User name is 'admin', password can be retrieved by
 ```
 kubectl -n contrail get secret cluster1-admin-password -ojson |jq .data.password | tr -d '"' |base64 --decode
