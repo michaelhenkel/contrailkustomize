@@ -258,7 +258,7 @@ spec:
       spec:
         commonConfiguration:
           nodeSelector:
-            node-role.kubernetes.io/worker: ""
+            node-role.opencontrail.org: vrouter
         serviceConfiguration:
           controlInstance: control1
           containers:
