@@ -76,6 +76,11 @@ REPLICA=3
 kubectl apply -k \
   github.com/michaelhenkel/contrailkustomize/contrail/${REPLICA}node/${RELEASE}
 ```
+## get password
+User name is 'admin', password can be retrieved by
+```
+kubectl -n contrail get secret cluster1-admin-password -ojson |jq .data.password | tr -d '"' |base64 --decode
+```
 ## Cleanup
 ```
 kubectl delete -k github.com/michaelhenkel/contrailkustomize/contrail/${REPLICA}node/${RELEASE}
